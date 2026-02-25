@@ -7,3 +7,10 @@ class Parser:
 
     def __str__(self):
         return f"{self.lines}"
+
+    def has_more_commands(self):
+
+        if len(self.lines) > 0:
+            return True
+        else:
+            return False

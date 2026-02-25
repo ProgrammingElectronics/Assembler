@@ -19,6 +19,18 @@ class TestParserFunctionality(unittest.TestCase):
 
         self.assertEqual(result.lines[0], test_content)
 
+    def test_has_more_commands_returns_false_with_empty_asm_file(self):
+
+        result = Parser("test_empty.asm")
+
+        self.assertFalse(result.has_more_commands())
+
+    def test_has_more_commands_returns_true_with_full_asm_file(self):
+
+        result = Parser("Add.asm")
+
+        self.assertTrue(result.has_more_commands())
+
 
 if __name__ == "__main__":
     unittest.main()
