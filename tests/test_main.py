@@ -31,6 +31,15 @@ class TestParserFunctionality(unittest.TestCase):
 
         self.assertTrue(result.has_more_commands())
 
+    def test_advance_has_next_command(self):
+
+        test = '// and the book "The Elements of Computing Systems"\n'
+
+        result = Parser("Add.asm")
+        result.advance()
+
+        self.assertEqual(result.current_command, test)
+
 
 if __name__ == "__main__":
     unittest.main()
