@@ -13,6 +13,8 @@ class Parser:
             self.current_line = 0
             self.current_command = self.lines[self.current_line]
 
+        self.remove_comments_and_spaces()
+
     def __str__(self):
         return f"{self.lines}"
 
@@ -32,6 +34,22 @@ class Parser:
         else:
 
             return 0
+        
+    def remove_comments_and_spaces(self):
+        
+        clean_lines = []
+        for line in self.lines:
+
+            line.strip()
+            print(f"line strip -> {line}")
+
+            if not line.startswith("//") and not line.startswith("\n"):
+                clean_lines.append(line)
+                print(clean_lines)
+
+        self.lines = clean_lines
+    
+        print(f"clean lines -> {self.lines}")
 
 
     

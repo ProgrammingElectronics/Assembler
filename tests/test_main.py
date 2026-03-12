@@ -12,8 +12,8 @@ class TestMainFunctionality(unittest.TestCase):
 
 class TestParserFunctionality(unittest.TestCase):
 
-    def test_constructor_stores_asm_lines(self):
-        test_content = "// This file is part of www.nand2tetris.org\n"
+    def test_constructor_stores_only_asm_lines(self):
+        test_content = "@2\n"
 
         result = Parser("Add.asm")
 
@@ -33,13 +33,12 @@ class TestParserFunctionality(unittest.TestCase):
 
     def test_advance_has_next_command(self):
 
-        test = '// and the book "The Elements of Computing Systems"\n'
+        test = 'D=A\n'
 
         result = Parser("Add.asm")
         result.advance()
 
         self.assertEqual(result.current_command, test)
-
 
 if __name__ == "__main__":
     unittest.main()
