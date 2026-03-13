@@ -40,5 +40,13 @@ class TestParserFunctionality(unittest.TestCase):
 
         self.assertEqual(result.current_command, test)
 
+    def test_command_type_returns_A_command(self):
+
+        test = Command_Type.A_COMMAND
+        
+        result = Parser("Add.asm")
+        
+        self.assertEqual(result.command_type(), test)
+
 if __name__ == "__main__":
     unittest.main()
