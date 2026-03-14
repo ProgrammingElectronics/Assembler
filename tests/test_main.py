@@ -13,7 +13,7 @@ class TestMainFunctionality(unittest.TestCase):
 class TestParserFunctionality(unittest.TestCase):
 
     def test_constructor_stores_only_asm_lines(self):
-        test_content = "@2\n"
+        test_content = "@2"
 
         result = Parser("Add.asm")
 
@@ -40,13 +40,27 @@ class TestParserFunctionality(unittest.TestCase):
 
         self.assertEqual(result.current_command, test)
 
-    def test_command_type_returns_A_command(self):
+    def test_command_type_returns_correct_command(self):
 
-        test = Command_Type.A_COMMAND
+        test_A_COMMAND = Command_Type.A_COMMAND
+        test_C_COMMAND = Command_Type.C_COMMAND
+        test_L_COMMAND = Command_Type.L_COMMAND
         
-        result = Parser("Add.asm")
+        result = Parser("test_commands.asm")
+        self.assertEqual(result.command_type(), test_A_COMMAND)
+        result.advance()     
+        self.assertEqual(result.command_type(), test_C_COMMAND)
+        result.advance()     
+        self.assertEqual(result.command_type(), test_L_COMMAND)
+
+    def test_symbol_returns_correct_decimal(self):
+
+        test_decimal = "0000111100001111"
+
+        result = Parser("test_commands.asm")
         
-        self.assertEqual(result.command_type(), test)
+        self.assertEqual(result.symbol(), test_decimal)
+
 
 if __name__ == "__main__":
     unittest.main()

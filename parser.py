@@ -2,14 +2,15 @@ from enum import Enum
 
 class Command_Type(Enum):
     A_COMMAND = 0
-    B_COMMAND = 1
-    C_COMMAND = 2
+    C_COMMAND = 1
+    L_COMMAND = 2
 
 class Parser:
 
     def __init__(self, file_name):
 
         with open(file_name, "r") as f:
+            # self.lines = f.read().splitlines()
             self.lines = f.readlines()
 
         self.current_line = None
@@ -49,9 +50,11 @@ class Parser:
         for line in self.lines:
 
             line.strip()
-            # print(f"line strip -> {line}")
+            # line.rstrip('\n')
+            print(f"line strip -> {line}")
 
             if not line.startswith("//") and not line.startswith("\n"):
+            
                 clean_lines.append(line)
                 # print(clean_lines)
 
@@ -61,11 +64,22 @@ class Parser:
     def command_type(self):
 
         current_type = None
-
         first_char = self.current_command[0] 
-        if first_char == "@":
 
+        if first_char == "@":
             current_type = Command_Type.A_COMMAND
+        elif first_char == "(":
+            current_type = Command_Type.L_COMMAND
+        else:
+            current_type = Command_Type.C_COMMAND
 
         return current_type
         
+    def symbol(self):
+
+        current_symbol = None
+        if self.command_type() == Command_Type.A_COMMAND:
+
+            current_symbol = self.current_command[1:]
+        
+        return current_symbol
