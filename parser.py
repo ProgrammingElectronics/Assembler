@@ -10,12 +10,11 @@ class Parser:
     def __init__(self, file_name):
 
         with open(file_name, "r") as f:
-            # self.lines = f.read().splitlines()
-            self.lines = f.readlines()
+            self.lines = f.read().splitlines()
+            # print(f"with open {self.lines}")
 
         self.current_line = None
         self.current_command = None
-        # self.type = None
 
         if self.has_more_commands():
     
@@ -43,20 +42,19 @@ class Parser:
         else:
 
             return 0
-        
+    """
+    If I wanted to make a more robust parser, I would deal with 
+    end of line comments and such, but I am not. Making the toy assumption for 
+    a specific format...
+    """
     def remove_comments_and_spaces(self):
         
         clean_lines = []
         for line in self.lines:
 
-            line.strip()
-            # line.rstrip('\n')
-            print(f"line strip -> {line}")
-
-            if not line.startswith("//") and not line.startswith("\n"):
+            if not line.startswith("//") and line:
             
                 clean_lines.append(line)
-                # print(clean_lines)
 
         self.lines = clean_lines
         # print(f"clean lines -> {self.lines}")
@@ -78,8 +76,10 @@ class Parser:
     def symbol(self):
 
         current_symbol = None
-        if self.command_type() == Command_Type.A_COMMAND:
-
+        if self.command_type() == Command_Type.A_COMMAND: # E.g. @xxx
             current_symbol = self.current_command[1:]
+        
+        elif self.command_type() == Command_Type.L_COMMAND: # E.g. (LOOP)
+            current_symbol = self.current_command[1:-1] # Remove starting and ending parenthesis
         
         return current_symbol

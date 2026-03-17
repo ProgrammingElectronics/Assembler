@@ -33,7 +33,7 @@ class TestParserFunctionality(unittest.TestCase):
 
     def test_advance_has_next_command(self):
 
-        test = 'D=A\n'
+        test = 'D=A'
 
         result = Parser("Add.asm")
         result.advance()
@@ -53,13 +53,23 @@ class TestParserFunctionality(unittest.TestCase):
         result.advance()     
         self.assertEqual(result.command_type(), test_L_COMMAND)
 
-    def test_symbol_returns_correct_decimal(self):
+    def test_symbol_returns_correct_decimal_for_A_COMMAND(self):
 
-        test_decimal = "0000111100001111"
+        test_decimal = "2"
 
-        result = Parser("test_commands.asm")
+        result = Parser("Add.asm")
         
         self.assertEqual(result.symbol(), test_decimal)
+    
+    def test_symbol_returns_correct_symbol_for_L_COMMAND(self):
+
+        test_symbol = "LOOP"
+
+        result = Parser("test_commands.asm")
+        result.advance()
+        result.advance()
+        
+        self.assertEqual(result.symbol(), test_symbol)
 
 
 if __name__ == "__main__":
