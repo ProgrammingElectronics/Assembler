@@ -83,3 +83,35 @@ class Parser:
             current_symbol = self.current_command[1:-1] # Remove starting and ending parenthesis
         
         return current_symbol
+    
+    def dest(self):
+        
+        dest = None
+        idx = self.current_command.find("=")
+    
+        if idx > 0:
+            dest = self.current_command[:idx] 
+        
+        return dest
+    
+    def comp(self):
+
+        comp = None
+
+        # Get index of "=", if not dest field, then set start_idx 0
+        # Get index of ";", if not jump field, then set stop_idx -1
+        # Return slic of currents command
+
+        start_idx = self.current_command.find("=")
+        if start_idx == -1:
+            start_idx = 0
+        else:
+            start_idx +=1
+        
+        end_idx = self.current_command.find(";")
+        if end_idx == -1:
+            comp = self.current_command[start_idx:]
+        else:
+            comp = self.current_command[start_idx:end_idx]
+
+        return comp

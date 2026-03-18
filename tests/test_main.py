@@ -68,9 +68,38 @@ class TestParserFunctionality(unittest.TestCase):
         result = Parser("test_commands.asm")
         result.advance()
         result.advance()
-        
+
         self.assertEqual(result.symbol(), test_symbol)
 
+    def test_dest_returns_correct_mnemonic(self):
+
+        test_dest_mnemonic = "D"
+
+        result = Parser("test_commands.asm")
+        result.advance()
+
+        self.assertEqual(result.dest(), test_dest_mnemonic)
+
+    def test_dest_returns_none_if_command_type_is_not_C(self):
+
+        test_dest_mnemonic = None
+
+        result = Parser("test_commands.asm")
+        
+        self.assertEqual(result.dest(), test_dest_mnemonic)
+
+
+    def test_comp_returns_correct_comp_mnemonics(self):
+
+        test_comp_mnemonic = "A" 
+        
+        # Switch to different test file just for comp
+        result = Parser("Add.asm")
+        result.advance()
+
+        self.assertEqual(result.comp(), test_comp_mnemonic)
+        result.advance()
+        self.assertEqual(result.comp(), test_comp_mnemonic)
 
 if __name__ == "__main__":
     unittest.main()

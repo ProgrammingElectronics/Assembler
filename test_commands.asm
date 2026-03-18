@@ -1,3 +1,5 @@
 @2
 D=D+A
 (LOOP)
+D=JEQ
+M=
