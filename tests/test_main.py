@@ -49,9 +49,9 @@ class TestParserFunctionality(unittest.TestCase):
         result = Parser("test_commands.asm")
         self.assertEqual(result.command_type(), test_A_COMMAND)
         result.advance()     
-        self.assertEqual(result.command_type(), test_C_COMMAND)
-        result.advance()     
         self.assertEqual(result.command_type(), test_L_COMMAND)
+        result.advance()     
+        self.assertEqual(result.command_type(), test_C_COMMAND)
 
     def test_symbol_returns_correct_decimal_for_A_COMMAND(self):
 
@@ -67,7 +67,6 @@ class TestParserFunctionality(unittest.TestCase):
 
         result = Parser("test_commands.asm")
         result.advance()
-        result.advance()
 
         self.assertEqual(result.symbol(), test_symbol)
 
@@ -76,6 +75,7 @@ class TestParserFunctionality(unittest.TestCase):
         test_dest_mnemonic = "D"
 
         result = Parser("test_commands.asm")
+        result.advance()
         result.advance()
 
         self.assertEqual(result.dest(), test_dest_mnemonic)
@@ -91,15 +91,39 @@ class TestParserFunctionality(unittest.TestCase):
 
     def test_comp_returns_correct_comp_mnemonics(self):
 
-        test_comp_mnemonic = "A" 
+        test_comp_mnemonic_1 = "D+A" 
+        test_comp_mnemonic_2 = "D" 
+        test_comp_mnemonic_3 = "0" 
         
         # Switch to different test file just for comp
-        result = Parser("Add.asm")
+        result = Parser("test_commands.asm")
+        
         result.advance()
+        result.advance()
+        self.assertEqual(result.comp(), test_comp_mnemonic_1)
+        
+        result.advance()
+        self.assertEqual(result.comp(), test_comp_mnemonic_2)
 
-        self.assertEqual(result.comp(), test_comp_mnemonic)
         result.advance()
-        self.assertEqual(result.comp(), test_comp_mnemonic)
+        self.assertEqual(result.comp(), test_comp_mnemonic_3)
+
+    def test_comp_returns_correct_jump_mnemonics(self):
+
+        test_comp_mnemonic_1 = "JEQ" 
+        test_comp_mnemonic_2 = "JMP" 
+        
+        # Switch to different test file just for comp
+        result = Parser("test_commands.asm")
+        
+        result.advance()
+        result.advance()
+        result.advance()
+        self.assertEqual(result.jump(), test_comp_mnemonic_1)
+        
+        result.advance()
+        self.assertEqual(result.jump(), test_comp_mnemonic_2)
+
 
 if __name__ == "__main__":
     unittest.main()

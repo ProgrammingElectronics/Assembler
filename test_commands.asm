@@ -1,5 +1,5 @@
 @2
-D=D+A
 (LOOP)
-D=JEQ
-M=
+D=D+A
+D;JEQ
+0;JMP

@@ -115,3 +115,16 @@ class Parser:
             comp = self.current_command[start_idx:end_idx]
 
         return comp
+    
+
+    def jump(self):
+
+        jump = None
+
+        idx = self.current_command.find(";")
+
+        if idx > 0:
+            idx += 1 # Do not include ;
+            jump = self.current_command[idx:]
+
+        return jump
