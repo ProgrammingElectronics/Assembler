@@ -11,9 +11,9 @@ class Parser:
 
         with open(file_name, "r") as f:
             self.lines = f.read().splitlines()
-            # print(f"with open {self.lines}")
+             # print(f"with open {self.lines}")
 
-        self.current_line = None
+        self.current_line = 0
         self.current_command = None
 
         if self.has_more_commands():
@@ -28,7 +28,8 @@ class Parser:
 
     def has_more_commands(self):
 
-        if self.lines:
+        if len(self.lines) >= self.current_line:
+        # if len(self.lines) > 0 and len(self.lines) > self.current_line:
             return True
         else:
             return False
@@ -36,7 +37,10 @@ class Parser:
     def advance(self):
         
         if self.has_more_commands():
-
+            
+            #############################################
+            # YOU ARE GOING OUT OF INDEX HERE
+            #############################################
             self.current_line += 1 
             self.current_command = self.lines[self.current_line]
         else:
